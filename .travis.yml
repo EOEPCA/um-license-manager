@@ -1,33 +1,37 @@
-sudo: required
-language: java
-install: true
+language: python
+python: 3.6.9
 
+env:
+  DOCKER_COMPOSE_VERSION: 1.25.4
 services:
   - docker
 
 jobs:
   include:
-    - stage: test
-      branch:
-        only:
-        - develop
-      # Minikube installation taken from: https://github.com/LiliC/travis-minikube/blob/minikube-30-kube-1.12/.travis.yml
-      # We need the systemd for the kubeadm and it's default from 16.04+
-      dist: xenial
-      before_script: sudo bash -x travis/setupCluster.sh
-      script: cd terraform/test && terraform init -input=false
+    - stage: Static Code Analysis    
+      language: java
+      if: branch = develop
+      before_install:
+        - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
+        - unzip sonar-scanner-cli-3.3.0.1492-linux.zip -d /tmp
+      script: /tmp/sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY -Dsonar.sources=. -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONAR_TOKEN
 
-      deploy:
-        - provider: script
-          skip_cleanup: true
-          script: sh ${TRAVIS_BUILD_DIR}/travis/test_template-svce.sh
-          on:
-            branch: develop
+
+    - stage: container creation and publishing
+      install: skip
+      script: travis/containerCreation.sh um-license-manager
+
+    - stage: smoke and acceptance test
+      install: skip # without this there's a `git clone` executed!
+      script: travis/acceptanceTest.sh um-license-manager 8080 7000 # Service name + external port + internal port for docker
+
+    - stage: release
+      if: branch = master AND NOT type IN (pull_request)
+      install: skip
+      script: travis/release.sh um-license-manager
 
 import:
   - docs/.travis.yml
-
-
 
 #notifications:
 #  slack: eoepca:Msk9hjQKAbwSYcVWiepenPim

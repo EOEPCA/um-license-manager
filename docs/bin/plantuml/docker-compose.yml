@@ -1,0 +1,9 @@
+---
+version: "2.1"
+services:
+  plantuml:
+    image: plantuml/plantuml-server:jetty
+    container_name: plantuml
+    ports:
+      - "9999:8080/tcp"
+    restart: unless-stopped
