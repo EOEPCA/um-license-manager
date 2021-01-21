@@ -1,39 +1,30 @@
-sudo: required
-language: java
-install: true
-
-services:
-  - docker
-
 jobs:
   include:
-    - stage: test
-      branch:
+    - stage: generate docs
+      branches:
         only:
-        - develop
-      # Minikube installation taken from: https://github.com/LiliC/travis-minikube/blob/minikube-30-kube-1.12/.travis.yml
-      # We need the systemd for the kubeadm and it's default from 16.04+
-      dist: xenial
-      before_script: sudo bash -x travis/setupCluster.sh
-      script: cd terraform/test && terraform init -input=false
+          - master
+          - develop
+          - /^release.*$/
+      if: NOT type IN (pull_request)
 
-      deploy:
-        - provider: script
-          skip_cleanup: true
-          script: sh ${TRAVIS_BUILD_DIR}/travis/test_template-svce.sh
-          on:
-            branch: develop
+      # Assume that 'docker' service is stated at the Travis global level. It seems that re-stating it here confuses Travis.
+      # services:
+      #   - docker
 
-import:
-  - docs/.travis.yml
+      before_install:
+        - docker pull asciidoctor/docker-asciidoctor
 
+      script:
+        - ./docs/bin/generate-docs.sh
 
+      after_error:
+        - docker logs asciidoc-to-html
+        - docker logs asciidoc-to-pdf
 
-#notifications:
-#  slack: eoepca:Msk9hjQKAbwSYcVWiepenPim
-#  email:
-#    recipients:
-#      - a.person@acme.com
-#      - a.n.other@acme.com
-#    on_success: never # default: change
-#    on_failure: never # default: always
+      after_failure:
+        - docker logs asciidoc-to-html
+        - docker logs asciidoc-to-pdf
+
+      after_success:
+        - ./docs/bin/publish-docs.sh
