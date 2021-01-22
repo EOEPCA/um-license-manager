@@ -26,7 +26,7 @@ for doc in SDD ICD; do
 		exit 1
 	fi
 	cd repos/$doc
-	rm -rf current
+	sudo rm -rf current
 	mv ../../$doc/output current
 	mv current/index.pdf current/EOEPCA-${GH_REPOS_NAME}.pdf
 
