@@ -1,6 +1,6 @@
 = EOEPCA - {component-name}
-:component-name: Login Service
-:component-github-name: um-login-service
+:component-name: License Manager
+:component-github-name: um-license-manager
 
 EO Exploitation Platform Common Architecture (EOEPCA).
 
