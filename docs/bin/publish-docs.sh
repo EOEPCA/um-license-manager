@@ -16,7 +16,7 @@ then
 fi
 
 # Clone the 'gh-pages' branch
-git clone --branch gh-pages --single-branch "git@github.com:AlvaroVillanueva/EOEPCA/${GH_REPOS_NAME}" repos
+git clone --branch gh-pages --single-branch "git@github.com:EOEPCA/${GH_REPOS_NAME}" repos
 
 for doc in SDD ICD; do
 	# Check the output directory exists
@@ -39,9 +39,6 @@ done
 
 cd repos
 # Config git profile for commits
-export GH_USER_NAME="AlvaroVillanueva"
-export GH_USER_EMAIL="alvaro.villanueva@deimos-space.com"
-export GH_TOKEN="186205d4a6447b858fb673ed1a697166423dd373"
 if [ -n "${GH_USER_NAME}" ]; then git config --global user.name "${GH_USER_NAME}"; fi
 if [ -n "${GH_USER_EMAIL}" ]; then git config --global user.email "${GH_USER_EMAIL}"; fi
 
