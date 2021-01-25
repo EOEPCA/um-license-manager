@@ -22,9 +22,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Generate the docs
         run: ./docs/bin/generate-docs.sh
-      - name: Generate the logs
-        run: |
-          docker logs asciidoc-to-html
-          docker logs asciidoc-to-pdf
+     
       - name: Publish the docs
         run: ./docs/bin/publish-docs.sh
