@@ -1,0 +1,159 @@
+= License Manager Interfaces
+
+[abstract]
+.Abstract
+This OpenAPI Document describes the endpoints exposed by License Building Block deployments. Using this API will allow to update the licenses that the owner has access. This access is protected by OIDC Client, ans SCIM Client components so the End Users resources can be protected using both the Login Service and the Policy Enforcement Point and access them through the Policy Decision Point.
+
+
+== API Endpoints
+
+    
+[.GET]
+=== GET License
+    
+`GET /license/<id>`
+
+
+===== Description 
+
+This operation returns the Code License associated to an id.
+
+
+===== Parameters
+
+License ID
+
+===== Return Type
+
+String
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+| 200
+| OK
+| String
+
+| 401
+| Unauthorized
+| ResponseType
+
+| 403
+| Forbidden
+| ResponseType
+|===         
+
+
+[.POST]
+=== POST/PUT License
+
+
+Insert
+`POST /licenses/`
+
+
+Update
+`POST /license/<id>`
+
+
+===== Description 
+
+This operation inserts or updates a License with the required parameters
+
+===== Parameters
+
+The data model is JSON based and will have a template TBD.
+
+===== Return Type
+
+ResponseType,
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+| 200
+| OK
+| String
+
+| 400
+| Bad Request
+| ResponseType
+
+| 401
+| Unauthorized
+| ResponseType
+
+| 403
+| Forbidden
+| ResponseType
+
+|===         
+
+    
+[.BillingChecks]
+=== Billing Checks
+
+
+[.BillingChecksGet]
+==== Policy Validation
+    
+`GET /license/billing`
+
+
+===== Description 
+
+This operation returns the information regarding time and storage consumed by a specific license.
+
+
+===== Parameters
+
+The request must be protected in order to dispose the information of the user that makes the query. This is retrieved through the SCIM Client same as the protection of identity through the OIDC Client. The parameter to retrieve that information may be as UID of the User.
+
+===== Return Type
+
+
+-TBD
+
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| OK
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}policy/validate/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}policy/validate/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :policy/validate/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}policy/validate/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]

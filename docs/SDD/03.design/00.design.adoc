@@ -1,0 +1,64 @@
+[[mainComponents]]
+= Design
+
+== Building Block Design
+
+[NOTE]
+.Content Description
+================================
+This section contains:
+
+* A concise breakdown of the Building Block in several independent services (when applicable). For each component, the following subsections are added:
+** Overview and purpose: indicating the functionality covered by the component
+** SW Reuse and Dependencies: indicating reuse of third party open source solutions (if any) and any pre-required Dependencies
+** Interfaces: both internal to the building block and those exposed externally
+** Data: Data usage of the building block, data flow and any GDPR concerns should be addressed here
+** Applicable Resources: links and references to (Reference Docs), and repositories.
+
+When a breakdown is necessary, a general overview of the building block can be given. On the contrary, no breakdown indicates a single component development with the same expected sections.
+
+================================
+
+
+== License Manager Core
+=== Overview and Purpose
+
+It is the main component of the building block, in which the scope of each license and its owner are determined. The objective is to recursively allocate licenses according to the privileges of the End User or the owner of the platform.
+Within the core of the building block the information of the relations between licenses, resources and Users is stored and managed. 
+
+=== Software Reuse and Dependencies
+
+All requirements for the executing of the reverse proxy are found under src/requirements.txt, and expect Python 3.6.9 or greater to work.
+
+The most important are:
+
+* **EOEPCA-SCIM**: Used to auto-register itself as a client to the Auth. Server upon startup
+* **EOEPCA-OIDC**: Used to generate PAT tokens, validate OAuth tokens and JWTs.
+* **WellKnownHandler**: Used to dynamically check the configuration of the Authorization Server on each execution. For example, it can get the needed endpoints for any API the PEP needs, such as the token request for OIDC.
+
+=== Interfaces
+
+This component doesn't have any internal interfaces. For a reference of external interfaces see <<External Interfaces>> on Section 2 <<Overview>>
+
+=== Data
+
+==== Configuration
+
+The License Manager gets all its configuration from the file located under `config/config.json`.
+
+==== Data flow
+
+The information that the License Manager handles is mainly user related since the authentication is propertly handled by the OIDC library and the user information from the SCIM Library.
+
+As it is a component that serves the PDP, a policy check will run the data flow of the License Manager to allow or deny access to a requested resource.
+
+The core also deals with the billing service when it comes to communicating the use of volume and time of the licenses and its consequent impact on the invoicing of the associated resource.
+
+
+=== Applicable Resources
+
+* EOEPCA's SCIM Client - https://github.com/EOEPCA/um-common-scim-client
+* EOEPCA's UMA Client - https://github.com/EOEPCA/um-common-uma-client
+* EOEPCA's Well Known Handler - https://github.com/EOEPCA/well-known-handler
+
+

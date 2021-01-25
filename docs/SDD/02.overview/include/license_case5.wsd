@@ -1,0 +1,48 @@
+@startuml
+=== UPDATE License ==
+== OK ==
+actor "Owner" order 1 #red
+participant "API" order 2
+participant "Core" order 3
+participant "OIDC Client" order 4
+database "DB" order 5
+"Owner" -> "API" : Update License(POST)
+"API" -> "Core" : Update License(POST)
+"Core"-> "OIDC Client" : Check credentials
+"OIDC Client"->"Core": 200 OK
+"Core" -> "DB" : Update
+"DB" -> "Core" : 200 OK
+"Core" -> "API" : 200 OK
+"API"-> "Owner" : 200 OK
+== Bad Request KO ==
+actor "Owner"
+"Owner" -> "API" : Update License(POST)
+"API" -> "Core" : Update License(POST)
+"Core"-> "OIDC Client" : Check credentials
+"OIDC Client"->"Core": 200 OK
+"Core" -> "DB" : Update
+"DB" -> "Core" : 400 Bad Request
+"Core" -> "API" : 400 Bad Request
+"API"-> "Owner" : 400 Bad Request
+
+=== DELETE License ==
+== OK ==
+"Owner" -> "API" : Delete License(DELETE)
+"API" -> "Core" : Delete License(DELETE)
+"Core"-> "OIDC Client" : Check credentials
+"OIDC Client"->"Core": 200 OK
+"Core" -> "DB" : Delete 
+"DB" -> "Core" : 200 OK
+"Core" -> "API" : 200 OK
+"API"-> "Owner" : 200 OK
+== Bad Request KO ==
+actor "Owner"
+"Owner" -> "API" : DeleteLicense(DELETE)
+"API" -> "Core" : Delete License(DELETE)
+"Core"-> "OIDC Client" : Check credentials
+"OIDC Client"->"Core": 200 OK
+"Core" -> "DB" : Delete 
+"DB" -> "Core" : 400 Bad Request
+"Core" -> "API" : 400 Bad Request
+"API"-> "Owner" : 400 Bad Request
+@enduml
