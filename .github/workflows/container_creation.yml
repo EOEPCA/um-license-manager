@@ -32,13 +32,14 @@ jobs:
           sudo apt-get install jq python3-venv
           pip install -r ./src/requirements.txt
           pytest ./tests
-      - name: Container Creation and Publishing
-        run: ./travis/containerCreation.sh um-license-manager
-      - name: Smoke and Acceptance Test
-        run: ./travis/acceptanceTest.sh um-license-manager 8080 7000
-      - name: Release Container
-        if: github.ref == 'refs/heads/master' && github.event != 'pull_request'
-        run: ./travis/release.sh um-license-manager
+      # Uncomment below if wanted Dockerhub Publication
+      # - name: Container Creation and Publishing
+      #   run: ./travis/containerCreation.sh um-license-manager
+      # - name: Smoke and Acceptance Test
+      #   run: ./travis/acceptanceTest.sh um-license-manager 8080 7000
+      # - name: Release Container
+      #   if: github.ref == 'refs/heads/master' && github.event != 'pull_request'
+      #   run: ./travis/release.sh um-license-manager
         
       
         

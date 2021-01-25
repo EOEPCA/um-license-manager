@@ -16,7 +16,7 @@ then
 fi
 
 # Clone the 'gh-pages' branch
-git clone --branch gh-pages --single-branch "git@github.com:EOEPCA/${GH_REPOS_NAME}" repos
+git clone --branch gh-pages --single-branch "https://${GH_TOKEN}@github.com/EOEPCA/${GH_REPOS_NAME}" repos
 
 for doc in SDD ICD; do
 	# Check the output directory exists
@@ -26,7 +26,7 @@ for doc in SDD ICD; do
 		exit 1
 	fi
 	cd repos/$doc
-	sudo rm -rf current
+	rm -rf current
 	mv ../../$doc/output current
 	mv current/index.pdf current/EOEPCA-${GH_REPOS_NAME}.pdf
 
@@ -39,8 +39,8 @@ done
 
 cd repos
 # Config git profile for commits
-if [ -n "${GH_USER_NAME}" ]; then git config --global user.name "${GH_USER_NAME}"; fi
-if [ -n "${GH_USER_EMAIL}" ]; then git config --global user.email "${GH_USER_EMAIL}"; fi
+if [ -n "${GH_USER_NAME}" ]; then git config user.name "${GH_USER_NAME}"; fi
+if [ -n "${GH_USER_EMAIL}" ]; then git config user.email "${GH_USER_EMAIL}"; fi
 
 # Commit the newly generated docs, and push to upstream
 git add . ; git commit -m "Deploy to GitHub Pages @ $(date -u)"

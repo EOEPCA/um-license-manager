@@ -34,4 +34,4 @@ for doc in SDD ICD; do
 	# PDF version
 	docker run ${DOCKER_RM} -v $PWD:/documents/ --name asciidoc-to-pdf-um asciidoctor/docker-asciidoctor asciidoctor-pdf -r asciidoctor-diagram -D /documents/output index.adoc
 	cd "${BIN_DIR}/.."
-done 
+done
