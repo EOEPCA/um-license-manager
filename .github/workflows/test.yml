@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Pricing Test Workflow
+name: License Manager Test Workflow
 
 # Controls when the action will run. 
 on:
@@ -10,6 +10,7 @@ on:
       - master
       - develop
       - 'release/**'
+      - 'feature/EOEPCA-163'
   pull_request:
     branches:
       - master
