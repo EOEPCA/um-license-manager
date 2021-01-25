@@ -1,4 +1,6 @@
 :doctype: book
+:title-logo-image: image::logo.png[top=5%, align=right, pdfwidth=6.5in]
+
 :author: TVUK System Team
 :email: <Eoepca.SystemTeam@telespazio.com>
 :project: EOEPCA

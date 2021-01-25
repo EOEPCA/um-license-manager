@@ -1,0 +1,44 @@
+@startuml
+=== GET License ==
+== OK ==
+actor "End-User" order 1
+participant "API" order 2
+participant "Core" order 3
+participant "OIDC Client" order 5
+database DB order 4
+"End-User" -> "API" : Get License
+"API" -> "Core" : Get License
+"Core"-> DB : Check usage limit
+DB -> "Core" : Data (OK)
+"Core" -> "API" : 200 OK (License Code)
+"API"-> "End-User" : 200 OK (License Code)
+== Usage Limit KO ==
+"End-User" -> "API" : Get License
+"API" -> "Core" : Get License
+"Core"-> DB : Check usage limit
+DB -> "Core" : Data (KO)
+"Core" -> "API" : 403 Forbidden
+"API"-> "End-User" : 403 Forbidden
+
+=== UPDATE License ==
+== Permission KO ==
+actor "End-User"
+participant "API"
+"End-User" -> "API" : Update License(POST)
+"API" -> "Core" : Update License(POST)
+"Core"-> "OIDC Client" : Check credentials
+"OIDC Client"->"Core": 401 Unauthorized
+"Core" -> "API" : 401 Unauthorized
+"API"-> "End-User" : 401 Unauthorized
+
+=== DELETE License ==
+== Permission KO ==
+actor "End-User"
+participant "API"
+"End-User" -> "API" : Delete License(DELETE)
+"API" -> "Core" : Delete License(DELETE)
+"Core"-> "OIDC Client" : Check credentials
+"OIDC Client"->"Core": 401 Unauthorized
+"Core" -> "API" : 401 Unauthorized
+"API"-> "End-User" : 401 Unauthorized
+@enduml

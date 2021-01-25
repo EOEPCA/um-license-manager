@@ -114,6 +114,16 @@ In this case the owner interacts with the API in order to operate against the li
 include::include/license_case1.wsd[]
 ....
 
+=== API Interaction
+
+[.text-center]
+[#img_license_case5,reftext='{figure-caption} {counter:figure-num}']
+.Owner Operation Case
+[plantuml, license_case5, png] 
+....
+include::include/license_case5.wsd[]
+....
+
 
 === End User access to a Resource protected with Licenses
 
@@ -127,6 +137,18 @@ The interaction within the system can be shown in the following diagram that ill
 include::include/license_case2.wsd[]
 ....
 
+
+=== End User access to the API
+
+The interaction within the system can be shown in the following diagram that illustrates how the end user interacts with the API
+
+[.text-center]
+[#img_license_case4,reftext='{figure-caption} {counter:figure-num}']
+.Owner Operation Case
+[plantuml, license_case4, png] 
+....
+include::include/license_case4.wsd[]
+....
 
 
 === End User Licenese management through the User Profile
