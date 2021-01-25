@@ -3,19 +3,7 @@
 name: License Manager BB Workflow
 
 # Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the develop branch
-  push:
-    branches:
-      - master
-      - develop
-      - 'release/**'
-      - 'feature/EOEPCA-163'
-  pull_request:
-    branches:
-      - master
-      - develop
-      - 'release/**'
+on: push
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
