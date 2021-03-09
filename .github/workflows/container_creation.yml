@@ -34,12 +34,12 @@ jobs:
           pytest ./tests
       # Uncomment below if wanted Dockerhub Publication
       # - name: Container Creation and Publishing
-      #   run: ./travis/containerCreation.sh um-license-manager
+      #   run: ./gh_actions/containerCreation.sh um-license-manager
       # - name: Smoke and Acceptance Test
-      #   run: ./travis/acceptanceTest.sh um-license-manager 8080 7000
+      #   run: ./gh_actions/acceptanceTest.sh um-license-manager 8080 7000
       # - name: Release Container
       #   if: github.ref == 'refs/heads/master' && github.event != 'pull_request'
-      #   run: ./travis/release.sh um-license-manager
+      #   run: ./gh_actions/release.sh um-license-manager
         
       
         
